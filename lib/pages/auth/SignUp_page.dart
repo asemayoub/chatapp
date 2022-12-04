@@ -126,16 +126,12 @@ class SignUpScreen extends StatelessWidget {
                         onpressed: () async {
                           // Access Method User And Password
 
-                          var auth = FirebaseAuth.instance;
+
 
                           // الميل والباسورد جايين من ال input فهبدا اخزنهم
 
                           try {
-                            UserCredential user =
-                                await auth.createUserWithEmailAndPassword(
-                              email: Email!,
-                              password: Password!,
-                            );
+                            await signUpFireBase(Email, Password);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Email Is Created'),backgroundColor: Primarycolor,));
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'weak-password') {
@@ -170,6 +166,14 @@ class SignUpScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> signUpFireBase(String? Email, String? Password) async {
+    UserCredential user =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: Email!,
+      password: Password!,
     );
   }
 }
