@@ -1,15 +1,17 @@
 import 'package:chatapp/Share/Components/components.dart';
+import 'package:chatapp/pages/auth/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../Share/Components/constant.dart';
-import 'SignUp_page.dart';
+import '../../Share/Components/constant.dart';
 
-class LoginScreen extends StatelessWidget {
-
-  String id = 'LoginScreenPage';
+class SignUpScreen extends StatelessWidget {
+  String id = 'SignUpScreen';
 
   @override
   Widget build(BuildContext context) {
+    String? Email;
+    String? Password;
     return Scaffold(
       body: ListView(
         children: [
@@ -17,14 +19,11 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                Container(
-                  height: 250,
-                  child: Image.asset('assets/icon/chat-10-removebg-preview.png'),
+                SizedBox(
+                  height: 40,
                 ),
                 Container(
-                  height: 420,
                   decoration: BoxDecoration(
-
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -34,7 +33,6 @@ class LoginScreen extends StatelessWidget {
                         offset: Offset(0, 3), // changes position of shadow
                       ),
                     ],
-
                   ),
                   padding: EdgeInsets.only(
                     top: 20,
@@ -50,19 +48,17 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            text: 'Welcome,',
+                            text: 'SignUp,',
                             fontsize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                           GestureDetector(
-                            onTap: (){
-
-                              Navigator.pushNamed(context,SignUpScreen().id);
-
+                            onTap: () {
+                              Navigator.pop(context);
                             },
                             child: CustomText(
-                              text: 'SignUp',
+                              text: 'SignIn',
                               fontsize: 18,
                               fontWeight: FontWeight.w400,
                               color: Primarycolor,
@@ -74,26 +70,43 @@ class LoginScreen extends StatelessWidget {
                         height: 5,
                       ),
                       CustomText(
-                        text: 'Sign in to Continue',
+                        text: 'Welcome New User',
                         fontsize: 14,
                         color: Colors.grey,
                       ),
                       SizedBox(
                         height: 56,
                       ),
+                      // User Name Filed
                       InputForm(
-                        type: TextInputType.emailAddress,
-                        text: 'Email',
+                        type: TextInputType.text,
+                        text: 'User Name',
                         color: Colors.grey,
-                        iconPrefex: Icons.email_outlined,
-                        hint: 'email@example.com',
-                        onsave: (value) {},
-                        onvalidate: (value) {},
+                        iconPrefex: Icons.person,
+                        hint: 'User Name',
                       ),
                       SizedBox(
                         height: 40,
                       ),
+                      // Email Field
                       InputForm(
+                        onchange: (value) {
+                          Email = value;
+                        },
+                        type: TextInputType.emailAddress,
+                        text: 'Email',
+                        color: Colors.grey,
+                        iconPrefex: Icons.email_outlined,
+                        hint: 'Email@example.com',
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      // Password Filed
+                      InputForm(
+                        onchange: (value) {
+                          Password = value;
+                        },
                         type: TextInputType.visiblePassword,
                         text: 'Passsword',
                         color: Colors.grey,
@@ -106,24 +119,55 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      CustomText(
-                        text: 'Forget Password?',
-                        fontsize: 14,
-                        alignment: Alignment.topRight,
-                      ),
                       SizedBox(
                         height: 20,
                       ),
                       CustomButtom(
-                        onpressed: () {},
-                        text: 'SIGN IN',
+                        onpressed: () async {
+                          // Access Method User And Password
+
+                          var auth = FirebaseAuth.instance;
+
+                          // الميل والباسورد جايين من ال input فهبدا اخزنهم
+
+                          try {
+                            UserCredential user =
+                                await auth.createUserWithEmailAndPassword(
+                              email: Email!,
+                              password: Password!,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Email Is Created'),backgroundColor: Primarycolor,));
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'weak-password') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text('The password provided is too weak'),
+                                backgroundColor: Primarycolor,
+                              ));
+                            } else if (e.code == 'email-already-in-use') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    'The account already exists for that email'),
+                                backgroundColor: Primarycolor,
+                              ));
+                            }
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        text: 'Register Now ',
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

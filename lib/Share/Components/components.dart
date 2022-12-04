@@ -28,7 +28,7 @@ class CustomText extends StatelessWidget {
       child: Text(
         '$text',
         style:
-        TextStyle(fontSize: fontsize, fontWeight: fontWeight, color: color),
+            TextStyle(fontSize: fontsize, fontWeight: fontWeight, color: color),
       ),
     );
   }
@@ -47,6 +47,7 @@ class InputForm extends StatelessWidget {
   late final IconData? iconstart;
   late final TextInputType? type;
   late final Function(String?)? onsubmit;
+  late final Function(String)? onchange;
 
   InputForm({
     this.text,
@@ -59,6 +60,7 @@ class InputForm extends StatelessWidget {
     this.onsubmit,
     this.iconPrefex,
     this.iconSuffex,
+    this.onchange
   });
 
   @override
@@ -73,6 +75,7 @@ class InputForm extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
           TextFormField(
+            onChanged: onchange,
             keyboardType: type,
             onFieldSubmitted: onsubmit,
             onSaved: onsave,
@@ -96,14 +99,12 @@ class InputForm extends StatelessWidget {
 // Custom Buttom
 
 class CustomButtom extends StatelessWidget {
-  @required
   String? text;
-  @required
   Function()? onpressed;
 
   CustomButtom({
-    this.onpressed,
-    this.text,
+    required this.onpressed,
+    required this.text,
   });
 
   @override
@@ -124,7 +125,6 @@ class CustomButtom extends StatelessWidget {
         //   color: Colors.teal,
         //   width: 2.0,
         // ),
-
       ),
     );
   }
@@ -173,7 +173,6 @@ class CustomSignButtom extends StatelessWidget {
             ),
           ],
         ),
-
       ),
     );
   }

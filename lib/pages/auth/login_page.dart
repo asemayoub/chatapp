@@ -1,11 +1,13 @@
 import 'package:chatapp/Share/Components/components.dart';
-import 'package:chatapp/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-import '../Share/Components/constant.dart';
+import '../../Share/Components/constant.dart';
+import 'SignUp_page.dart';
 
-class SignUpScreen extends StatelessWidget {
-  String id = 'SignUpScreen';
+class LoginScreen extends StatelessWidget {
+
+  String id = 'LoginScreenPage';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,8 +17,12 @@ class SignUpScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                SizedBox(height: 40,),
                 Container(
+                  height: 250,
+                  child: Image.asset('assets/icon/chat-10-removebg-preview.png'),
+                ),
+                Container(
+                  height: 420,
                   decoration: BoxDecoration(
 
                     color: Colors.white,
@@ -44,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            text: 'SignUp,',
+                            text: 'Welcome,',
                             fontsize: 30,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -52,10 +58,11 @@ class SignUpScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: (){
 
-                              Navigator.pop(context);
+                              Navigator.pushNamed(context,SignUpScreen().id);
+
                             },
                             child: CustomText(
-                              text: 'SignIn',
+                              text: 'SignUp',
                               fontsize: 18,
                               fontWeight: FontWeight.w400,
                               color: Primarycolor,
@@ -67,7 +74,7 @@ class SignUpScreen extends StatelessWidget {
                         height: 5,
                       ),
                       CustomText(
-                        text: 'Welcome New User',
+                        text: 'Sign in to Continue',
                         fontsize: 14,
                         color: Colors.grey,
                       ),
@@ -75,23 +82,11 @@ class SignUpScreen extends StatelessWidget {
                         height: 56,
                       ),
                       InputForm(
-                        type: TextInputType.text,
-                        text: 'User Name',
-                        color: Colors.grey,
-                        iconPrefex: Icons.person,
-                        hint: 'User Name',
-                        onsave: (value) {},
-                        onvalidate: (value) {},
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      InputForm(
                         type: TextInputType.emailAddress,
                         text: 'Email',
                         color: Colors.grey,
                         iconPrefex: Icons.email_outlined,
-                        hint: 'Email@example.com',
+                        hint: 'email@example.com',
                         onsave: (value) {},
                         onvalidate: (value) {},
                       ),
@@ -111,6 +106,11 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
+                      CustomText(
+                        text: 'Forget Password?',
+                        fontsize: 14,
+                        alignment: Alignment.topRight,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -118,13 +118,12 @@ class SignUpScreen extends StatelessWidget {
                         onpressed: () {},
                         text: 'SIGN IN',
                       ),
-                      SizedBox(height: 20,),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

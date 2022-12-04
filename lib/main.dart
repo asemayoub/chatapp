@@ -1,11 +1,22 @@
 import 'package:chatapp/Share/Components/constant.dart';
-import 'package:chatapp/pages/SignUp_page.dart';
-import 'package:chatapp/pages/login_page.dart';
+import 'package:chatapp/pages/auth/SignUp_page.dart';
+import 'package:chatapp/pages/auth/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+// Import the generated file
+import 'firebase_options.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
