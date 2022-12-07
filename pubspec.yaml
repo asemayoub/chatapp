@@ -36,9 +36,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+#  hex color package
   hexcolor: ^3.0.1
+#  Fire Base Setup Packages
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.5
+#  Package To Hundle If internet not connection is Loading
+  modal_progress_hud_nsn: ^0.3.0
+
 
 
 dev_dependencies:
