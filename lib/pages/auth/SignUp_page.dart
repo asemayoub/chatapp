@@ -1,4 +1,5 @@
 import 'package:chatapp/Share/Components/components.dart';
+import 'package:chatapp/pages/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -161,6 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 try {
                                   await signUpFireBase(Email, Password);
                                   snackBarMessage(context, 'Success');
+                                  Navigator.pushNamed(context, chatScreen().id);
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'weak-password') {
                                     snackBarMessage(context,

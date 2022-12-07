@@ -1,5 +1,6 @@
 import 'package:chatapp/pages/auth/SignUp_page.dart';
 import 'package:chatapp/pages/auth/login_page.dart';
+import 'package:chatapp/pages/chat.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen().id: (context) => LoginScreen(),
         SignUpScreen().id: (context) => SignUpScreen(),
+        chatScreen().id: (context) => chatScreen(),
       },
       initialRoute: LoginScreen().id,
     );
