@@ -10,7 +10,6 @@ import 'SignUp_page.dart';
 class LoginScreen extends StatefulWidget {
   String id = 'LoginScreenPage';
 
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -100,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 56,
                           ),
                           InputForm(
-                            obsecure: isHidden,
+                            obsecure: false,
                             onchange: (value) {
                               email = value;
                             },
@@ -120,23 +119,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 40,
                           ),
                           InputForm(
-
                             onchange: (value) {
                               password = value;
                             },
-                            obsecure:isHidden,
+                            obsecure: isHidden,
                             type: TextInputType.visiblePassword,
                             text: 'Passsword',
                             color: Colors.grey,
                             iconPrefex: Icons.lock,
-                            setIcon: isHidden ? Icons.visibility : Icons.visibility_off,
-                            suffexclick: (){
-
+                            setIcon: isHidden
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            suffexclick: () {
                               setState(() {
                                 togglePassword();
                               });
-
-
                             },
                             hint: '**************',
                             onsave: (value) {},
@@ -218,7 +215,4 @@ class _LoginScreenState extends State<LoginScreen> {
       isHidden = !isHidden;
     });
   }
-
-
 }
-
