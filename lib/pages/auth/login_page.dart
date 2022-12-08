@@ -10,12 +10,15 @@ import 'SignUp_page.dart';
 class LoginScreen extends StatefulWidget {
   String id = 'LoginScreenPage';
 
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formkey = GlobalKey();
+
+  bool isHidden = true;
 
   bool isLoading = false;
 
@@ -97,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 56,
                           ),
                           InputForm(
+                            obsecure: isHidden,
                             onchange: (value) {
                               email = value;
                             },
@@ -116,14 +120,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 40,
                           ),
                           InputForm(
+
                             onchange: (value) {
                               password = value;
                             },
+                            obsecure:isHidden,
                             type: TextInputType.visiblePassword,
                             text: 'Passsword',
                             color: Colors.grey,
                             iconPrefex: Icons.lock,
-                            iconSuffex: Icons.visibility,
+                            setIcon: isHidden ? Icons.visibility : Icons.visibility_off,
+                            suffexclick: (){
+
+                              setState(() {
+                                togglePassword();
+                              });
+
+
+                            },
                             hint: '**************',
                             onsave: (value) {},
                             onvalidate: (value) {
@@ -198,4 +212,13 @@ class _LoginScreenState extends State<LoginScreen> {
     UserCredential user = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email!, password: password!);
   }
+
+  void togglePassword() {
+    setState(() {
+      isHidden = !isHidden;
+    });
+  }
+
+
 }
+

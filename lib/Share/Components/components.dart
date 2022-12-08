@@ -37,17 +37,21 @@ class CustomText extends StatelessWidget {
 // Custom InputForm
 
 class InputForm extends StatelessWidget {
+  late final bool? obsecure;
   late final String? text;
   late final Color? color;
   late final String? hint;
   late final IconData? iconPrefex;
-  late final IconData? iconSuffex;
+  late final IconButton? iconSuffex;
+  late final IconData? setIcon;
+  VoidCallback? suffexclick;
   late final Function(String?)? onsave;
   late final String? Function(String?)? onvalidate;
   late final IconData? iconstart;
   late final TextInputType? type;
   late final Function(String?)? onsubmit;
   late final Function(String)? onchange;
+
 
   InputForm({
     this.text,
@@ -60,7 +64,11 @@ class InputForm extends StatelessWidget {
     this.onsubmit,
     this.iconPrefex,
     this.iconSuffex,
-    this.onchange
+    this.onchange,
+    this.obsecure,
+    this.suffexclick,
+    this.setIcon,
+
   });
 
   @override
@@ -75,6 +83,7 @@ class InputForm extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
           TextFormField(
+            obscureText: obsecure!,
             onChanged: onchange,
             keyboardType: type,
             onFieldSubmitted: onsubmit,
@@ -83,7 +92,7 @@ class InputForm extends StatelessWidget {
             decoration: InputDecoration(
               hintText: '$hint',
               prefixIcon: Icon(iconPrefex),
-              suffixIcon: Icon(iconSuffex),
+              suffixIcon: IconButton(onPressed: suffexclick, icon: Icon(setIcon)),
               hintStyle: TextStyle(
                 color: Colors.grey[400],
               ),
@@ -177,3 +186,21 @@ class CustomSignButtom extends StatelessWidget {
     );
   }
 }
+
+class IconClick extends StatelessWidget {
+  IconClick({Key? key}) : super(key: key);
+
+  @required VoidCallback? ontap;
+
+  @required IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: IconButton(onPressed: ontap,icon: Icon(icon)),
+
+    );
+  }
+
+}
+

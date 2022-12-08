@@ -19,6 +19,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   GlobalKey<FormState> formKey = GlobalKey();
 
   bool isLoading = false;
+  bool isHidden = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           // User Name Filed
                           InputForm(
+                            obsecure: false,
                             onvalidate: (value) {
                               if (value!.isEmpty) {
                                 return 'User Name Is Required';
@@ -109,6 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           // Email Field
                           InputForm(
+                            obsecure: false,
                             onvalidate: (value) {
                               if (value!.isEmpty) {
                                 return 'Email Is Required';
@@ -128,6 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           // Password Filed
                           InputForm(
+                            obsecure: isHidden,
                             onchange: (value) {
                               Password = value;
                             },
@@ -135,7 +140,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             text: 'Passsword',
                             color: Colors.grey,
                             iconPrefex: Icons.lock,
-                            iconSuffex: Icons.visibility,
+                            suffexclick: (){
+
+                              setState(() {
+                                togglePassword();
+                              });
+
+                            },
+                            setIcon: isHidden ? Icons.visibility  : Icons.visibility_off,
                             hint: '**************',
                             onsave: (value) {},
                             onvalidate: (value) {
@@ -213,4 +225,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       password: Password!,
     );
   }
+
+
+
+  void togglePassword(){
+
+    setState(() {
+
+      isHidden = !isHidden;
+    });
+
+  }
+
 }
+
