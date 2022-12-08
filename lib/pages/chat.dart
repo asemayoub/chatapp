@@ -1,9 +1,15 @@
-import 'package:chatapp/pages/auth/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class chatScreen extends StatelessWidget {
+import 'auth/login_page.dart';
+
+class chatScreen extends StatefulWidget {
   String id = 'ChatScreen';
+  @override
+  State<chatScreen> createState() => _chatScreenState();
+}
+
+class _chatScreenState extends State<chatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
