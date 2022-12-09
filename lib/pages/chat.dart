@@ -16,6 +16,8 @@ class chatScreen extends StatelessWidget {
 
   final ScrollController ControllerScroll = ScrollController();
 
+  GlobalKey<FormState> formKey = GlobalKey();
+
   void scrollDown() {
     ControllerScroll.animateTo(0,
         duration: Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
@@ -72,31 +74,54 @@ class chatScreen extends StatelessWidget {
                         top: 16,
                         bottom: 12,
                       ),
-                      child: TextFormField(
-                        controller: MessagesController,
-                        onFieldSubmitted: (value) {
-                          messages.add({
-                            KMessageConst: value,
-                            timeConst: DateTime.now(),
-                            'idEmail': email,
-                          });
-                          MessagesController.clear();
-                          scrollDown();
-                        },
-                        decoration: InputDecoration(
-                            hintText: 'Send Message',
-                            suffixIcon: Icon(Icons.send),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                              width: 1,
-                            )),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                      child: Form(
+                        key: formKey,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'input Your Message';
+                            }
+                          },
+                          controller: MessagesController,
+                          onFieldSubmitted: (value) {
+                            if (formKey.currentState!.validate()) {
+                              messages.add({
+                                KMessageConst: value,
+                                timeConst: DateTime.now(),
+                                'idEmail': email,
+                              });
+                              MessagesController.clear();
+                              scrollDown();
+                            }
+                          },
+                          decoration: InputDecoration(
+                              hintText: 'Send Message',
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate()) {
+                                      var messagesend = MessagesController.text;
+                                      messages.add({
+                                        KMessageConst: messagesend,
+                                        timeConst: DateTime.now(),
+                                        'idEmail': email,
+                                      });
+                                      MessagesController.clear();
+                                      scrollDown();
+                                    }
+                                  },
+                                  icon: Icon(Icons.send)),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
                                 width: 1,
-                                color: Primarycolor,
-                              ),
-                              borderRadius: BorderRadius.circular(18),
-                            )),
+                              )),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Primarycolor,
+                                ),
+                                borderRadius: BorderRadius.circular(18),
+                              )),
+                        ),
                       ),
                     ),
                   ],

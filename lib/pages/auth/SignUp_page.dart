@@ -173,7 +173,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 try {
                                   await signUpFireBase(Email, Password);
                                   snackBarMessage(context, 'Success');
-                                  Navigator.pushNamed(context, chatScreen().id);
+                                  Navigator.pushNamed(context, chatScreen().id,
+                                      arguments: Email);
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'weak-password') {
                                     snackBarMessage(context,
