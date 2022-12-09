@@ -43,6 +43,8 @@ dependencies:
   firebase_auth: ^4.1.5
 #  Package To Hundle If internet not connection is Loading
   modal_progress_hud_nsn: ^0.3.0
+#  Cloud Fire Base Flutter To Handle Messages Data
+  cloud_firestore: ^4.2.0
 
 
 
