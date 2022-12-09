@@ -7,12 +7,6 @@ import '../Share/Components/constant.dart';
 import '../models/messages.dart';
 import 'auth/login_page.dart';
 
-// class chatScreen extends StatefulWidget {
-//
-//   @override
-//   State<chatScreen> createState() => _chatScreenState();
-// }
-
 class chatScreen extends StatelessWidget {
   String id = 'ChatScreen';
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -50,11 +44,15 @@ class chatScreen extends StatelessWidget {
                 body: Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(itemBuilder: (context, index) {
-                        return Align(
-                            alignment: Alignment.centerLeft,
-                            child: ChatBuble());
-                      }),
+                      child: ListView.builder(
+                          itemCount: messagesList.length,
+                          itemBuilder: (context, index) {
+                            return Align(
+                                alignment: Alignment.centerLeft,
+                                child: ChatBuble(
+                                  message: messagesList[index],
+                                ));
+                          }),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -67,7 +65,7 @@ class chatScreen extends StatelessWidget {
                         controller: MessagesController,
                         onFieldSubmitted: (value) {
                           messages.add({
-                            KeyMessagesCollectionConst: value,
+                            KMessageConst: value,
                           });
                           MessagesController.clear();
                         },

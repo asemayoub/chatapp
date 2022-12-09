@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../models/messages.dart';
 import 'constant.dart';
 
 class ChatBuble extends StatelessWidget {
+  final Message message;
+  ChatBuble({required this.message});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +20,7 @@ class ChatBuble extends StatelessWidget {
         color: Primarycolor,
       ),
       child: Text(
-        'lorem text message',
+        message.message,
         style: TextStyle(fontSize: 18, color: Colors.white),
       ),
     );
