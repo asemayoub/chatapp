@@ -21,7 +21,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isLoading = false;
   bool isHidden = true;
 
-
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -140,14 +139,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             text: 'Passsword',
                             color: Colors.grey,
                             iconPrefex: Icons.lock,
-                            suffexclick: (){
-
+                            suffexclick: () {
                               setState(() {
                                 togglePassword();
                               });
-
                             },
-                            setIcon: isHidden ? Icons.visibility  : Icons.visibility_off,
+                            setIcon: isHidden
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                             hint: '**************',
                             onsave: (value) {},
                             onvalidate: (value) {
@@ -226,16 +225,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-
-
-  void togglePassword(){
-
+  void togglePassword() {
     setState(() {
-
       isHidden = !isHidden;
     });
-
   }
-
 }
-

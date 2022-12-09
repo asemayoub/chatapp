@@ -14,12 +14,21 @@ class chatScreen extends StatelessWidget {
   CollectionReference messages =
       FirebaseFirestore.instance.collection(KeyMessagesCollectionConst);
 
+  final ScrollController ControllerScroll = ScrollController();
+
+  void scrollDown() {
+    ControllerScroll.animateTo(0,
+        duration: Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var email = ModalRoute.of(context)!.settings.arguments;
+
     // Setup Collection FireStore Messages
 
-    return FutureBuilder<QuerySnapshot>(
-        future: messages.get(),
+    return StreamBuilder<QuerySnapshot>(
+        stream: messages.orderBy(timeConst, descending: true).snapshots(),
         builder: (context, Asyncsnapshot) {
           if (Asyncsnapshot.hasData) {
             List<Message> messagesList = [];
@@ -45,13 +54,15 @@ class chatScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                          reverse: true,
+                          controller: ControllerScroll,
                           itemCount: messagesList.length,
                           itemBuilder: (context, index) {
-                            return Align(
-                                alignment: Alignment.centerLeft,
-                                child: ChatBuble(
-                                  message: messagesList[index],
-                                ));
+                            return messagesList[index].id == email
+                                ? ChatBuble(
+                                    message: messagesList[index],
+                                  )
+                                : ChatBubleFriend(message: messagesList[index]);
                           }),
                     ),
                     Padding(
@@ -66,8 +77,11 @@ class chatScreen extends StatelessWidget {
                         onFieldSubmitted: (value) {
                           messages.add({
                             KMessageConst: value,
+                            timeConst: DateTime.now(),
+                            'idEmail': email,
                           });
                           MessagesController.clear();
+                          scrollDown();
                         },
                         decoration: InputDecoration(
                             hintText: 'Send Message',
